@@ -64,19 +64,7 @@ func ProcessDirectoryChanges(dir string, config DirectoryConfig) error {
 				} else {
 					eventCount++
 					if eventCount > config.MaxEvents {
-						slog.Debug("too many events, suppressing...",
-							"count", eventCount,
-							"max", config.MaxEvents,
-							"timeout", config.EventTimeout,
-							"lastEventTime", lastEventTime,
-							"currentTime", currentTime,
-							"suppression time remaining", remainingTime.String(),
-						)
-						slog.Info("suppression stats",
-							"op", event.Op,
-							"timeout", config.EventTimeout,
-							"suppression time remaining", remainingTime.String(),
-						)
+						debug(eventCount, config, lastEventTime, currentTime, remainingTime, event)
 						continue
 					}
 				}
@@ -97,6 +85,22 @@ func ProcessDirectoryChanges(dir string, config DirectoryConfig) error {
 	<-done
 
 	return nil
+}
+
+func debug(eventCount int, config DirectoryConfig, lastEventTime time.Time, currentTime time.Time, remainingTime time.Duration, event fsnotify.Event) {
+	slog.Debug("too many events, suppressing...",
+		"count", eventCount,
+		"max", config.MaxEvents,
+		"timeout", config.EventTimeout,
+		"lastEventTime", lastEventTime,
+		"currentTime", currentTime,
+		"suppression time remaining", remainingTime.String(),
+	)
+	slog.Info("suppression stats",
+		"op", event.Op,
+		"timeout", config.EventTimeout,
+		"suppression time remaining", remainingTime.String(),
+	)
 }
 
 func RunTest(dir string) error {
