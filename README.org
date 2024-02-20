@@ -1,7 +1,0 @@
-* mostdobby
-
-This is a description of my mostdobby.
-
-** Usage
-
-To use my project, run this command: ./mostdobby --verbose

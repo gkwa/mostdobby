@@ -4,12 +4,12 @@ import (
 	"errors"
 
 	"github.com/spf13/cobra"
-	"github.com/taylormonacelli/mostdobby/test1"
+	"github.com/taylormonacelli/mostdobby/watch"
 )
 
-// test1Cmd represents the test1 command
-var test1Cmd = &cobra.Command{
-	Use:   "test1",
+// watchCmd represents the watch command
+var watchCmd = &cobra.Command{
+	Use:   "watch",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -25,7 +25,7 @@ to quickly create a Cobra application.`,
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		directory := args[0]
-		err := test1.RunTest(directory)
+		err := watch.RunTest(directory)
 		if err != nil {
 			panic(err)
 		}
@@ -33,5 +33,5 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	rootCmd.AddCommand(test1Cmd)
+	rootCmd.AddCommand(watchCmd)
 }
